@@ -6,6 +6,8 @@ import User from "./models/User.js";
 import authRouter from "./Routes/authRouter.js";  
 import taskRouter from "./Routes/taskRouter.js";  
 import cookieParser from "cookie-parser";
+import helmet from "helmet";
+
 dotenv.config();
    
 const app = express();
@@ -24,13 +26,16 @@ mongoose
     // This callback runs if the connection fails
     console.log("Error connecting to MongoDB:", err);
   });
-
+ 
+app.use(helmet());
 // This middleware parses incoming request bodies with URL-encoded data (from HTML forms)
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false }));
 // This middleware parses incoming JSON payloads (useful for API endpoints)
 app.use(express.json()); 
 // This middleware parses cookies attached to incoming requests
 app.use(cookieParser());
+
+app.use(express.static("taskapp-frontend/build")  );  
 
 app.get('/users', async (req, res) => {
     try {
@@ -39,6 +44,10 @@ app.get('/users', async (req, res) => {
     } catch (error) {
         res.status(500).json({ message: "Error fetching users" });
     }
+});
+
+app.get("/", (req, res) => { 
+  res.send("API is running");
 });
 
 // Authentication routes
