@@ -22,7 +22,7 @@ This is the backend API for the TaskApp project, built with Node.js, Express, an
 
 1. Clone the repository:
    ```sh
-   git clone <your-repo-url>
+   git clone https://github.com/abdallahelkhteeb/TaskApp.git
    cd TaskApp
    ```
 2. Install dependencies:
